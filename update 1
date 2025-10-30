@@ -1,0 +1,17 @@
+Reusability principle:  
+`swft-ngx-eform-trigger-shared` is one of multiple Angular libraries used in the SWFT ecosystem.  
+Each library is responsible for a specific functional area and exposes reusable components, services, and models through its `public-api.ts`.  
+Within this library, the `shared/` folder is used to group components that are reused across multiple features **inside** the same library.  
+Any component, service, or model intended for reuse across other SWFT libraries or UI applications must be properly exported in `public-api.ts`.
+
+
+Reusability principle:  
+This library (`swft-ngx-eform-trigger-shared`) contains reusable components, services, and models used by SWFT UI applications.  
+The `shared/` folder inside this library is used only for components reused within this same library and does not apply across other SWFT libraries.  
+Any component, service, or model intended for use outside this library must be exported through `public-api.ts`.
+
+
+Reusability principle:  
+This library (`swft-ngx-eform-trigger-shared`) contains reusable components, services, and models that can be used across multiple SWFT UI repositories.  
+The `shared/` folder is used to organize these common components.  
+All reusable items must be properly exported through `public-api.ts`.

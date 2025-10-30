@@ -1,0 +1,90 @@
+Excellent question — this is where your setup really starts to shine 💪
+
+Because your copilot-instructions.md already defines coding standards, you can now ask very naturally for new functionality — and Copilot will create production-ready code that follows your conventions (TypeScript, Angular 19, OnPush, Jest tests, etc.).
+
+⸻
+
+🧠 What to Ask (Plain English Prompt)
+
+Here are a few natural ways to phrase it inside Copilot Chat (any of these work):
+
+Add a function in this component that converts a UTC date string to the user’s local timezone.
+
+Include validation for invalid dates and format it as MM/dd/yyyy, HH:mm.
+
+Or a bit shorter:
+
+Add a UTC-to-local timezone converter function inside this component, with proper error handling.
+
+Or if you want to explicitly include comments:
+
+Add a UTC-to-local timezone conversion function to this component with inline comments explaining each step.
+
+⸻
+
+⚙️ Expected Behavior (based on your instruction file)
+
+Copilot will:
+	•	Insert the new function within your component’s TypeScript file.
+	•	Follow Angular + TypeScript best practices (no inline logic in the template).
+	•	Use Date and Intl.DateTimeFormat or toLocaleString() for conversion.
+	•	Handle invalid dates gracefully (no runtime errors).
+	•	Optionally add Jest test stubs to your .spec.ts file.
+	•	Respect your formatting — OnPush, SCSS, Jest, etc.
+
+If you specify “with inline comments,” it will generate something like:
+
+convertUtcToLocal(utcDateString: string): string {
+  try {
+    // Parse the input string as UTC
+    const utcDate = new Date(utcDateString);
+
+    // If the date is invalid, return a fallback
+    if (isNaN(utcDate.getTime())) {
+      return 'Invalid Date';
+    }
+
+    // Convert to local time using the browser’s locale
+    return utcDate.toLocaleString(undefined, {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  } catch (err) {
+    // Log or handle the exception gracefully
+    console.error('Error converting UTC date:', err);
+    return 'Error';
+  }
+}
+
+
+⸻
+
+🧩 Bonus — Add to Testing
+
+After Copilot adds the function, you can immediately ask:
+
+Add Jest test cases for the UTC-to-local conversion function covering valid and invalid inputs.
+
+That’ll extend your .spec.ts with unit tests like:
+	•	valid date → returns local formatted string
+	•	invalid date → returns “Invalid Date”
+	•	empty input → handles gracefully
+
+⸻
+
+💬 Tip for Comment Style
+
+If you want Copilot to always include meaningful inline comments (not just when you ask),
+you can add this one-liner at the end of your copilot-instructions.md file:
+
+## 10) Commenting rule
+Every generated function, service, or component should include short inline comments explaining key logic and purpose.
+
+Then you’ll never have to say “with comments” again — it’ll be automatic 🧠
+
+⸻
+
+Would you like me to show exactly how to update your instruction file to always include comments automatically?

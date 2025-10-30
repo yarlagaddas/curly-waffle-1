@@ -1,0 +1,99 @@
+
+1) Project Overview
+
+SWFT (Simplified Workflow Tool) is an intake and fulfillment platform that allows configuration and execution of low-code e-forms for business processes.  
+It simplifies onboarding, automates workflows, and reduces manual dependencies by using reusable shared components.
+
+Main process flow:  
+Request → Intake → Routing → Fulfillment → Resolution / Notification
+
+Core modules:  
+- Governance / Configuration: Data dictionary, form builder, and promotion of configurations between environments.  
+- Intake / Submission: Collects request data, performs validations, and submits to the fulfillment layer.  
+- Fulfillment / Management: Executes business workflows, sends completion or resolution notifications.
+
+Typical UI component responsibilities:  
+- Show or edit e-form data  
+- Open dialogs for preview, recall, send-invite, submission details, or warnings  
+- Display loading and error states  
+- Use Angular Material dialogs, spinners, and alerts for consistent UX
+
+Reusability principle:  
+All shared or generic components must reside in the shared library (swft-ngx-eform-trigger-shared) and be exported for reuse across SWFT modules.
+
+## 2) Tech stack
+
+- **Angular 19.x** — using standalone components with OnPush change detection  
+- **TypeScript 5.x** — strict typing  
+- **Angular Material** — UI components  
+- **Kendo UI (limited)** — for grids and dropdowns  
+- **RxJS + SubSink** — reactive programming and cleanup  
+- **Jest** — testing framework  
+- **SCSS** — encapsulated component styles  
+
+**SWFT Shared Libraries (imports only)**  
+@swft/swft-ngx-app-properties-service  
+@swft/swft-ngx-data-dictionary-service  
+@swft/swft-ngx-fulfillment-service  
+@swft/swft-ngx-governance-service  
+@swft/swft-ngx-http-interceptors  
+@swft/swft-ngx-shared-service
+
+2) Tech Stack (for Copilot code generation)
+
+Core Framework:
+- Angular 19 standalone component architecture
+- Modules used:
+  - @angular/core
+  - @angular/common
+  - @angular/forms
+  - @angular/material
+  - @angular/router
+
+Common Libraries:
+- RxJS for async streams and observables
+- SubSink for subscription management
+- MatDialog for modal dialogs
+- MatSnackBar for alerts and notifications
+- SCSS for component-level styling
+- Jest as the testing framework for components and services
+
+Optional Libraries:
+- Kendo UI for grid and dropdown components
+- ngx-mask for input formatting
+- Moment.js for date handling
+- Tippy.js for tooltips
+
+3) Coding guidelines (POC)
+
+- Use standalone components with changeDetection: OnPush.
+- Always generate four files: .ts, .html, .scss, .spec.ts.
+- Place components under projects/swft/swft-ngx-eform-trigger-shared/components/shared/.
+- Each component should expose at least one @Input() and one @Output().
+- Use MatDialog, MAT_DIALOG_DATA, and MatDialogRef for dialogs.
+- Add ariaLabel and role="dialog" for accessibility.
+- Include an isLoading flag for async operations and disable actions while loading.
+- Handle errors with MatSnackBar or shared SWFT alert components.
+- Manage RxJS subscriptions with SubSink and clean up in ngOnDestroy.
+- Use SCSS only, no inline styles.
+- Jest tests must cover: creation, input/output binding, and error path.
+- Export new components and services from public-api.ts.
+
+4) Project structure (POC)
+
+Library location:
+projects/swft/swft-ngx-eform-trigger-shared/
+
+Use the following folders:
+- components/          → all Angular components and dialogs
+- components/shared/   → components reused across multiple features
+- services/            → Angular services (HttpClient, orchestration)
+- models/              → typed interfaces used by components/services
+- constants/           → UI labels, messages, and enums
+- public-api.ts        → export all reusable items
+
+Rules:
+- If unsure where to place a new component, put it under components/
+- If the component will be used in more than one module or screen, put it under components/shared/
+- Always export shared components and services from public-api.ts
+- Keep file names in kebab-case and component names in PascalCase

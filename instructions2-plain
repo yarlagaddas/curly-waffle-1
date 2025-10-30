@@ -1,0 +1,172 @@
+Perfect — you’re absolutely on the right track 👏
+
+Once your copilot-instructions.md is complete (like yours is), you no longer need to “teach” Copilot in your prompt.
+You just talk like a person, and it should already apply all the SWFT rules automatically (4 files, OnPush, Jest, SubSink, correct folder, etc.).
+
+Here’s how your earlier technical prompts translate into plain English Copilot chat that’ll still produce full, production-ready code:
+
+⸻
+
+🧩 Component creation
+
+✅ Instead of
+
+Create a SWFT Angular component with two inputs and a button. Generate .ts, .html, .scss, and .spec.ts.
+
+Just say
+
+Create a component with two input fields and a button in the middle.
+
+⸻
+
+✅ Instead of
+
+Create a reusable shared component under components/shared/.
+
+Just say
+
+Create a reusable component that can be used in other screens.
+
+⸻
+
+✅ Instead of
+
+Create a dialog component with MAT_DIALOG_DATA and MatDialogRef.
+
+Just say
+
+When I click the button, open a dialog box with a message and a confirm button.
+
+⸻
+
+✅ Instead of
+
+Add an isLoading flag, handle errors with MatSnackBar, and use OnPush.
+
+Just say
+
+Add proper loading and error handling the way we usually do in this project.
+
+⸻
+
+✅ Instead of
+
+Generate four files (.ts, .html, .scss, .spec.ts).
+
+Just say
+
+Create a new component.
+
+(it will automatically create all four files because that’s in your instructions)
+
+⸻
+
+🧰 Services and models
+
+✅ Instead of
+
+Create a service with HttpClient, typed model, and Jest tests.
+
+Just say
+
+Create a service that fetches form data from /api/forms.
+
+⸻
+
+✅ Instead of
+
+Add a model under models/.
+
+Just say
+
+Add a data model for the form with id, name, and status.
+
+⸻
+
+🧪 Tests
+
+✅ Instead of
+
+Generate Jest unit tests.
+
+Just say
+
+Write tests for this component.
+
+or
+
+Add test cases for success, error, and output.
+
+⸻
+
+🔁 Updates / Refactors
+
+✅ Instead of
+
+Convert this to standalone and OnPush.
+
+Just say
+
+Make this follow our component standards.
+
+⸻
+
+✅ Instead of
+
+Add @Input and @Output.
+
+Just say
+
+Allow this component to accept data and send back an event when clicked.
+
+⸻
+
+🧱 Path placement
+
+✅ Instead of
+
+Put in components/shared/.
+
+Just say
+
+This should be reusable — put it in shared.
+
+or if not:
+
+Create it in the components folder.
+
+⸻
+
+🧩 Review and checks
+
+✅ Instead of
+
+Review this for OnPush, Jest, SCSS…
+
+Just say
+
+Review this component for SWFT standards.
+
+⸻
+
+In short, you can now talk to Copilot the way you’d talk to a teammate.
+You don’t have to mention files, extensions, folders, or frameworks — your instruction file already enforces that.
+
+⸻
+
+💡 Example full conversation that should just work now:
+
+You:
+
+Create a component with two textboxes and a button.
+When I click the button, show a dialog saying “Submitted successfully.”
+
+Copilot:
+➡️ Creates a component under components/
+➡️ Uses standalone, OnPush
+➡️ Adds isLoading, SubSink, SCSS
+➡️ Creates the dialog component
+➡️ Generates .spec.ts files for both
+➡️ Adds tests for open/close and click flow
+
+All from two normal English sentences — no need to mention file types or paths.

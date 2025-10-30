@@ -1,0 +1,5 @@
+## Dependency Management
+
+When generated code uses a package that is not listed in this repo’s package.json, automatically include it with a compatible version so the project builds successfully after npm install.
+
+Ensure all required dependencies are present to avoid missing module errors.

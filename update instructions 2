@@ -1,0 +1,99 @@
+# Copilot Instructions (SWFT_NGX_EFORM_TRIGGER_SHARED)
+
+## 1) Project Overview
+
+SWFT (Simplified Workflow Tool) is an intake and fulfillment platform that allows configuration and execution of low-code e-forms for business processes.  
+It simplifies onboarding, automates workflows, and reduces manual dependencies by using reusable shared components.
+
+Main process flow:  
+Request → Intake → Routing → Fulfillment → Resolution / Notification
+
+Core modules:  
+- Governance / Configuration: Data dictionary, form builder, and promotion of configurations between environments.  
+- Intake / Submission: Collects request data, performs validations, and submits to the fulfillment layer.  
+- Fulfillment / Management: Executes business workflows, sends completion or resolution notifications.
+
+Typical UI component responsibilities:  
+- Show or edit e-form data  
+- Open dialogs for preview, recall, send-invite, submission details, or warnings  
+- Display loading and error states  
+- Use Angular Material dialogs, spinners, and alerts for consistent UX
+
+Reusability principle:  
+All shared or generic components must reside in the shared library (`swft-ngx-eform-trigger-shared`) and be exported for reuse across SWFT modules.
+
+---
+
+## 2) Tech Stack (for Copilot code generation)
+
+Core Framework:
+- Angular 19 standalone component architecture
+- Modules used:
+  - @angular/core
+  - @angular/common
+  - @angular/forms
+  - @angular/material
+  - @angular/router
+
+Common Libraries:
+- RxJS for async streams and observables
+- SubSink for subscription management
+- MatDialog for modal dialogs
+- MatSnackBar for alerts and notifications
+- SCSS for component-level styling
+- Jest as the testing framework for components and services
+
+Optional Libraries:
+- Kendo UI for grid and dropdown components
+- ngx-mask for input formatting
+- Moment.js for date handling
+- Tippy.js for tooltips
+
+---
+
+## 3) Coding Guidelines (POC)
+
+- Use standalone components with `changeDetection: OnPush`.
+- Always generate four files: `.ts`, `.html`, `.scss`, `.spec.ts`.
+- Place components under `projects/swft/swft-ngx-eform-trigger-shared/components/`.
+- Each component must include at least one `@Input()` and one `@Output()`.
+- Use `MatDialog`, `MAT_DIALOG_DATA`, and `MatDialogRef` for dialogs.
+- Add `ariaLabel` and `role="dialog"` for accessibility.
+- Include an `isLoading` flag for async operations and disable actions while loading.
+- Handle errors with `MatSnackBar` or shared SWFT alert components.
+- Manage RxJS subscriptions with `SubSink` and clean up in `ngOnDestroy`.
+- Use SCSS only; avoid inline styles.
+- Jest tests must cover component creation, input/output binding, and error paths.
+- Export all reusable components and services from `public-api.ts`.
+
+---
+
+## 4) Project Structure (POC)
+
+Library location:
+`projects/swft/swft-ngx-eform-trigger-shared/`
+
+Use this folder structure for all Copilot-generated code:
+
+- components/          → Angular components and dialogs
+- components/shared/   → Reusable components used across modules
+- services/            → Angular services for API and orchestration logic
+- services/utils/      → Utility functions used by services
+- models/              → TypeScript models and DTOs
+- constants/           → UI labels, messages, and static configuration
+- enums/               → Shared enumerations for statuses, types, or codes
+- directives/          → Custom directives for UI behavior
+- tests/               → Shared mocks and test helpers (optional)
+- public-api.ts        → Exports for reusable components, services, and models
+- ng-package.json      → Library packaging configuration
+- index.ts             → Entry point for internal exports
+
+Rules for Copilot:
+- Components → go under components/ (shared if reused across modules)
+- Services → go under services/
+- Models → go under models/
+- Constants, enums, and directives → go under respective folders
+- Utility functions → go inside services/utils/
+- Shared tests and mock data → go under tests/
+- Always export reusable items in public-api.ts
+- Use kebab-case for file names and PascalCase for component/class names

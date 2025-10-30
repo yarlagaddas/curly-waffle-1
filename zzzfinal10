@@ -1,0 +1,9 @@
+## 10) Commenting and Documentation Standards
+
+- All generated code must include short, meaningful comments that explain purpose and intent.  
+- Add a brief JSDoc comment (`/** ... */`) above every class, function, or service method summarizing what it does.  
+- Use inline comments (`// ...`) only where logic or reasoning is not obvious.  
+- Comments should describe *why* the code exists or *what it achieves*, not restate syntax.  
+- Test files should include concise comments describing each scenario or test case.  
+- Keep comments professional, consistent, and aligned with enterprise code review standards.  
+- Every generated artifact must be self-explanatory and production-ready.

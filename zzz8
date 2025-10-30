@@ -1,0 +1,20 @@
+## 0) Repository and path rule
+
+- Work in the current project (the VS Code workspace that is already open).
+- Use these folders as the only valid roots for generated files:
+
+  - `projects/swft/swft-ngx-eform-trigger-shared/components/`
+  - `projects/swft/swft-ngx-eform-trigger-shared/services/`
+  - `projects/swft/swft-ngx-eform-trigger-shared/models/`
+  - `projects/swft/swft-ngx-eform-trigger-shared/constants/`
+  - `projects/swft/swft-ngx-eform-trigger-shared/enums/`
+  - `projects/swft/swft-ngx-eform-trigger-shared/directives/`
+
+- Do **not** create another `projects/...` folder inside these paths.  
+  If a path already starts with `projects/swft/swft-ngx-eform-trigger-shared/`, reuse it as-is.
+
+- If the user does **not** specify a path, create the new component here:
+  `projects/swft/swft-ngx-eform-trigger-shared/components/`
+
+- If the user says “shared”, create it here:
+  `projects/swft/swft-ngx-eform-trigger-shared/components/shared/`

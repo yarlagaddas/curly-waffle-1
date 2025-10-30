@@ -1,0 +1,39 @@
+## Repository and Path Rules (Simplified)
+
+- Root repository name: SWFT_NGX_EFORM_TRIGGER_SHARED/
+- Angular library path inside this repo: projects/swft/swft-ngx-eform-trigger-shared/
+- Always generate files inside this path: SWFT_NGX_EFORM_TRIGGER_SHARED/projects/swft/swft-ngx-eform-trigger-shared/
+- Do not create a new folder at the root level (for example, avoid creating a duplicate `swft-ngx-eform-trigger-shared/`).
+
+## Repository and Path Rule
+
+All code generation must happen **inside the currently open workspace**, exactly where this instruction file resides.  
+If relative paths are mentioned (e.g., `components/`, `services/`), treat them as relative to this instruction file’s directory structure.
+
+Always resolve full paths starting from this base library: projects/swft/swft-ngx-eform-trigger-shared/
+Never create or write to any new folders outside this path, even if names are similar.
+
+
+
+## Repository and Path Rule
+
+All code generation must happen inside the currently open workspace/repository where this instruction file exists.
+
+Always treat relative paths (like `components/`, `services/`, `models/`) as relative to this base library:
+
+projects/swft/swft-ngx-eform-trigger-shared/
+
+Do not create or write files outside this path, even if a similar folder name exists.
+
+---
+
+## Dependency Management
+
+When generated code imports a package that is not in this repo’s package.json, automatically add it to package.json so the project can build after `npm install`.
+
+- Use versions that match or are compatible with the Angular version already used in this repo.
+- Put runtime/UI libraries (for example `@angular/material`, `@angular/cdk`, `@angular/animations`, `subsink`, Kendo) under `dependencies`.
+- Put testing/tooling libraries (for example `jest`, `jest-preset-angular`, `ts-jest`, `@types/jest`) under `devDependencies`.
+- If generated tests reference a setup file (for example `setup-jest.ts`), also show the change needed in package.json to register it.
+
+Goal: after generating code and updating package.json, running `npm install` should be enough to compile and run tests.

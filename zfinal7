@@ -1,0 +1,28 @@
+## Repository and Path Rule
+
+All code generation must happen **inside the current open workspace and repository** where this instruction file exists.  
+Do **not** create new folders at the root or outside this workspace.
+
+The main Angular library for this project is: SWFT_NGX_EFORM_TRIGGER_SHARED/projects/swft/swft-ngx-eform-trigger-shared/
+
+When generating any files, always treat this path as the base.
+
+### Default folder placement rules
+
+If no folder is specified, automatically use the correct one based on the artifact type:
+
+| Artifact Type | Default Folder (relative to base path) |
+|----------------|----------------------------------------|
+| Component / Dialog | components/ |
+| Shared / Reusable Component | components/shared/ |
+| Service | services/ |
+| Model / DTO | models/ |
+| Constant | constants/ |
+| Enum | enums/ |
+| Directive | directives/ |
+
+### Additional Rules
+- Never place files directly under `swft-ngx-eform-trigger-shared/` (the library root).  
+- Never create new folders at the root level (for example another `swft-ngx-eform-trigger-shared/`).  
+- Resolve all relative paths starting from the base library path above.  
+- Always use existing folder names unless the user explicitly requests a new subfolder.

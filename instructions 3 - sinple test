@@ -1,0 +1,120 @@
+Perfect 👍 — here’s a short starter checklist and a few first test prompts you can use to confirm that Copilot is correctly reading and applying your copilot-instructions.md file.
+
+⸻
+
+✅ Initial Test Setup Checklist
+
+Before testing:
+	1.	Make sure copilot-instructions.md is in the root of your repo (same level as package.json or inside your workspace root).
+	2.	Confirm it includes your repository path rules (projects/swft/swft-ngx-eform-trigger-shared/...).
+	3.	Restart VS Code (so Copilot reloads the context).
+	4.	Open the Copilot Chat panel — and ensure you’re in the same workspace.
+	5.	Start with short, natural prompts to see if Copilot creates the correct files in the right folder.
+
+⸻
+
+💬 Test 1: Simple Component
+
+Prompt:
+
+Create a component with a button that shows a message when clicked.
+
+Expected behavior:
+	•	Creates all 4 files (.ts, .html, .scss, .spec.ts)
+	•	Uses standalone syntax and OnPush
+	•	Adds a Material button
+	•	Uses MatSnackBar or similar for showing a message
+	•	Puts everything under
+projects/swft/swft-ngx-eform-trigger-shared/components/
+
+⸻
+
+💬 Test 2: Component with Input Fields
+
+Prompt:
+
+Create a component with two input fields and a submit button. When I click submit, show a dialog saying “Submitted successfully.”
+
+Expected behavior:
+	•	Generates both a component and a dialog component
+	•	Automatically uses MatDialog and MatDialogRef
+	•	Includes proper imports, isLoading, OnPush
+	•	Adds Jest test files for both (creation + dialog open/close)
+	•	Dialog should be accessible (ariaLabel, role="dialog")
+
+⸻
+
+💬 Test 3: Shared Reusable Component
+
+Prompt:
+
+Create a reusable form input component that can be used in multiple screens.
+
+Expected behavior:
+	•	Puts files under components/shared/
+	•	Adds @Input() and @Output()
+	•	Exports the component in public-api.ts
+
+⸻
+
+💬 Test 4: Service Creation
+
+Prompt:
+
+Create a service that fetches form details from /api/forms.
+
+Expected behavior:
+	•	Adds a file under services/
+	•	Uses HttpClient with typed model from models/
+	•	Adds catchError and logs via MatSnackBar or a shared alert
+	•	Generates a Jest test file using HttpTestingController
+
+⸻
+
+💬 Test 5: Review an Existing Component
+
+Prompt:
+
+Review this component for SWFT standards and tell me what is missing.
+
+Expected behavior:
+	•	Checks for missing things like OnPush, SubSink, isLoading, @Input(), test coverage, etc.
+	•	Gives precise suggestions (no generic feedback).
+
+⸻
+
+💬 Test 6: Add Tests
+
+Prompt:
+
+Add Jest test cases for this component covering success and error paths.
+
+Expected behavior:
+	•	Updates or creates the .spec.ts file
+	•	Uses TestBed and ComponentFixture
+	•	Adds test for isLoading or failure case
+	•	Mocks dialogs or services if present
+
+⸻
+
+💬 Test 7: Fix Placement Check
+
+Prompt:
+
+Create a component with a button and place it in the shared folder.
+
+Expected behavior:
+	•	All files appear in
+projects/swft/swft-ngx-eform-trigger-shared/components/shared/
+	•	Not in a duplicate or top-level folder.
+
+⸻
+
+Once these pass, you’re 100% production-ready.
+After that, you can just talk naturally, like:
+
+“Add loading and error handling for this API call.”
+“Convert this to follow our standards.”
+“Create a simple dialog for confirmation.”
+
+Copilot will automatically follow your instruction file for everything.

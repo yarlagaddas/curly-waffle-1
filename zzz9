@@ -1,0 +1,11 @@
+### Save the files
+When you create a component / dialog for this library, create all 4 files in the same folder under:
+projects/swft/swft-ngx-eform-trigger-shared/...
+
+Files:
+- .ts
+- .html
+- .scss
+- .spec.ts
+
+Do not create them in another temp/project folder. Put them where the component belongs (components/ or components/shared/).

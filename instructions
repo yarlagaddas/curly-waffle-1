@@ -1,0 +1,202 @@
+Nice — this is the fun part 😎
+
+Since your copilot-instructions.md is doing the heavy lifting (Angular 19, standalone, OnPush, SCSS, Jest, SWFT paths, Material, SubSink, public-api, dependency mgmt), you can keep your day-to-day prompts short and human.
+
+Below are a bunch of ready-to-paste Copilot chat instructions that will actually work in your setup.
+
+I’ll group them so you can find them later:
+
+⸻
+
+1. Create / update components
+
+1.1 Simple form
+
+Create a SWFT Angular component with two inputs (firstName, lastName) and a submit button. Use our instructions file. Put it in components/.
+
+1.2 Reusable shared
+
+Create a reusable SWFT component to display a read-only e-form summary. Put it in components/shared/. Generate TS, HTML, SCSS, and Jest spec.
+
+1.3 Component + validation
+
+Build a component for capturing email and phone using Reactive Forms. Show validation errors, disable submit when invalid, and include Jest tests.
+
+1.4 Component that uses service
+
+Create a component that calls an existing SWFT service to load e-forms. Show loading spinner, show snackbar on error, and write unit tests that mock the service.
+
+1.5 Component that emits
+
+Create a component that accepts @Input() forms: SwftForm[] and emits @Output() formSelected = new EventEmitter<SwftForm>() when a row is clicked. Include spec.
+
+⸻
+
+2. Dialogs (your platform does a lot of dialogs)
+
+2.1 Basic dialog
+
+Create a Material dialog that shows e-form details passed with MAT_DIALOG_DATA. Include open/close tests. Follow our instructions file.
+
+2.2 Component + dialog pair
+
+Create a component with a button that opens a Material dialog. The dialog should return the user’s selection. Generate all 4 files for both.
+
+2.3 Confirm dialog
+
+Generate a reusable confirm dialog (title, message, OK/Cancel) in components/shared/ and add Jest tests for confirm and cancel.
+
+⸻
+
+3. Services
+
+3.1 New service
+
+Create an Angular service under services/ that calls /api/swft/forms and returns typed models from models/. Add Jest tests with HttpTestingController.
+
+3.2 Service with error handling
+
+Create a SWFT service to POST a recall request. Use HttpClient, handle errors with catchError, and test success/error cases.
+
+3.3 Update existing service
+
+Open swft-ngx-eform-trigger-shared.service.ts and add a method to get submission status by requestId. Follow the same error-handling pattern and add tests.
+
+⸻
+
+4. Models / DTOs
+
+4.1 New model
+
+Create a new model swft-form-summary.model.ts under models/ with fields id, name, status, createdDate. Export it from public-api.ts.
+
+4.2 Model + usage
+
+Add a typed interface for recall requests and update the recall component to use it instead of any.
+
+⸻
+
+5. Tests only (what you asked)
+
+5.1 Complete existing spec
+
+Write or complete Jest tests for swft-copilot-test.component.ts. If a spec exists, enhance it to cover creation, input binding, output emit, and error state.
+
+5.2 Service test
+
+Generate Jest test for swft-ngx-eform-trigger-shared.service.ts using HttpTestingController. Cover success and 500 error.
+
+5.3 Dialog test
+
+Add unit tests for the dialog we just created — opening with MAT_DIALOG_DATA, closing with a result, and cancel.
+
+⸻
+
+6. “Fix what Copilot just generated”
+
+6.1 Add missing imports
+
+Review the component we just generated and add any missing Angular Material modules to the imports array so the tests will run.
+
+6.2 Put it in the right folder
+
+Move the generated files into projects/swft/swft-ngx-eform-trigger-shared/components/shared/ and fix the relative imports.
+
+6.3 Export it
+
+Add this new component to projects/swft/swft-ngx-eform-trigger-shared/public-api.ts so it can be used in other UI repos.
+
+⸻
+
+7. Dependency / package.json help
+
+7.1 Auto add deps
+
+Check the code we just generated and add any missing libraries to package.json (Angular Material, SubSink, Jest) using the same versions already used in this repo.
+
+7.2 Jest setup
+
+If Jest setup is missing, create setup-jest.ts and update package.json Jest config according to our instructions file.
+
+⸻
+
+8. Refactor / improve existing code
+
+8.1 Add loading + snackbar
+
+Take this component and add an isLoading flag, disable the button during async, and show MatSnackBar on error.
+
+8.2 Add OnPush
+
+Update this component to be a standalone component with ChangeDetectionStrategy.OnPush and adjust the test accordingly.
+
+8.3 Replace any
+
+Scan this component and replace all any types with proper interfaces from models/ (or create new ones if missing).
+
+⸻
+
+9. SWFT-pattern prompts (very useful)
+
+9.1 SWFT-style component
+
+Generate a SWFT-style Angular component for showing submission status. Follow our SWFT copilot instructions — correct folder, 4 files, Jest, OnPush.
+
+9.2 SWFT recall flow dialog
+
+Create a SWFT-style dialog for recalling an e-form. It should accept the requestId as data, call a service, show loading, show snackbar on error, and include Jest tests.
+
+⸻
+
+10. “Explain what you did” prompts
+
+10.1 Why here?
+
+Explain why you created the files under projects/swft/swft-ngx-eform-trigger-shared/components/ and not under a new folder.
+
+10.2 Show all files
+
+List all files you just created for this feature with their full paths.
+
+⸻
+
+11. Super-short prompts that still work
+	•	“make this SWFT compliant”
+	•	“convert this to standalone + OnPush”
+	•	“add Jest tests to this”
+	•	“put this under shared”
+	•	“add dialog for this button”
+	•	“call our service here and show errors”
+	•	“use Material inputs instead of HTML inputs”
+
+Because your instruction file says: “Default: always assume the user wants complete, production-ready SWFT-style Angular output, even if not explicitly stated.” — these short ones should still expand to full code.
+
+⸻
+
+12. One-off function / helper
+
+12.1 Pure function
+
+Create a pure TypeScript utility under services/utils/ to map SWFT form DTOs to a UI model. Include a Jest test.
+
+12.2 Validate form
+
+Add a helper function in this component to validate an e-form and return a list of errors. Write unit tests just for that function.
+
+⸻
+
+13. Code review / PR checks
+
+13.1 Review this file
+
+Review this component for SWFT standards (standalone, OnPush, SCSS, Jest, SubSink, public-api) and tell me what is missing.
+
+⸻
+
+If you want a one-liner that forces it to obey the instruction file every time, you can even start with:
+
+Using .github/copilot-instructions.md for this repo, create …
+
+That reminds Copilot to look there first.
+
+You don’t have to use all of these — but if you keep 6–7 of them in a scratchpad, anyone on your team will look at it and go, “ok, this setup is actually usable.”

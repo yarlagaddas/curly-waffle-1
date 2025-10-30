@@ -1,0 +1,18 @@
+# SWFT Angular Code Generation Instructions
+
+Purpose:
+Generate SWFT-style Angular components, dialogs, services, models, and Jest tests that can be used across SWFT UI repositories. The user will often ask in plain language, so always apply these rules even if not explicitly stated.
+
+## Repository and Path Rule
+
+All code generation must happen **inside this same workspace and repository** (the one containing this copilot-instructions.md file).  
+Do **not** create or write files outside this folder tree.
+
+The base Angular library path is:
+SWFT_NGX_EFORM_TRIGGER_SHARED/projects/swft/swft-ngx-eform-trigger-shared/
+
+Always treat relative paths (`components/`, `services/`, `models/`) as relative to that base folder.
+
+Do not create a new folder named `swft-ngx-eform-trigger-shared` at the root level.  
+All new components, dialogs, and services must go **under this existing path**:
+`projects/swft/swft-ngx-eform-trigger-shared/`

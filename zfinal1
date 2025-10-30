@@ -1,0 +1,141 @@
+# copilot-instructions.md
+
+This repo is an Angular 19 shared library:
+projects/swft/swft-ngx-eform-trigger-shared/
+
+Purpose:
+Generate SWFT-style Angular components, dialogs, services, models, and Jest tests that can be used across SWFT UI repositories. The user will often ask in plain language, so always apply these rules even if the user does not mention them.
+
+## 1) Project overview
+
+SWFT (Simplified Workflow Tool) is an intake and fulfillment platform for building and running low-code e-forms.  
+Typical UI work in this library is to:
+- show or edit e-form data
+- open dialogs for preview, recall, send-invite, submission details, or warnings
+- display loading and error states
+- call shared Angular SWFT services for data and actions
+- follow Angular Material (and Kendo where needed)
+
+Main process flow:
+Request → Intake → Routing → Fulfillment → Resolution / Notification
+
+This instruction file applies to the Angular library:
+projects/swft/swft-ngx-eform-trigger-shared/
+
+## 2) Tech stack to target
+
+- Angular 19 (standalone components)
+- @angular/core
+- @angular/common
+- @angular/forms
+- @angular/material
+- @angular/router
+- RxJS for async flows
+- SubSink for subscription cleanup
+- SCSS for styling
+- Jest for unit tests
+
+Optional (allowed when needed):
+- Kendo UI controls (for grids, dropdowns)
+- ngx-mask
+- Moment.js or date utilities
+
+## 3) Coding guidelines
+
+- Always create four files for a new component or dialog: .ts, .html, .scss, .spec.ts
+- Use standalone component syntax
+- Use changeDetection: ChangeDetectionStrategy.OnPush
+- Prefer at least one @Input() and one @Output() for interactive components
+- Use SCSS only; no inline styles
+- Add an isLoading flag for async operations and disable actions while loading
+- Handle errors with MatSnackBar or an existing shared SWFT alert component
+- Do not use console.log in production code
+- Manage RxJS subscriptions using SubSink and clean up in ngOnDestroy
+- Dialogs must use MatDialog + MAT_DIALOG_DATA + MatDialogRef, and include ariaLabel and role="dialog"
+- If the component, service, model, directive, or enum is reusable, export it from public-api.ts
+- All generated code must compile under Angular strict mode
+
+## 4) Project structure
+
+projects/
+  swft/
+    swft-ngx-eform-trigger-shared/
+      components/            ← default location for new components and dialogs
+        shared/              ← reusable components used in multiple screens/features
+      services/              ← Angular services (HttpClient, orchestration)
+        utils/               ← existing helper utilities (keep here)
+      models/                ← typed interfaces / DTOs
+      constants/             ← UI labels, messages, static configuration
+      directives/            ← custom directives
+      enums/                 ← shared enumerations
+      tests/                 ← shared test helpers or mocks (optional)
+      public-api.ts          ← export reusable items
+      ng-package.json
+      index.ts
+
+Placement rules:
+- If the user does not specify a path, put new components in: components/
+- If the user says “shared”, “reusable”, or “common”, put in: components/shared/
+- Services go to: services/
+- Models and DTOs go to: models/
+- Constants go to: constants/
+- Enums go to: enums/
+- Directives go to: directives/
+- Utility functions stay under services/utils/ (do not move existing ones)
+- Any shared/reusable artifact should be added to public-api.ts (or add a TODO comment if you cannot edit it in the generated code)
+
+## 5) Component and dialog defaults
+
+When generating a component:
+- create: <name>.component.ts, <name>.component.html, <name>.component.scss, <name>.component.spec.ts
+- standalone: true
+- changeDetection: OnPush
+- import necessary Angular Material modules
+- include at least one @Input() and one @Output() if the component is interactive
+- add isLoading: boolean = false;
+- use MatSnackBar for error display
+- write Jest tests to cover:
+  - component creation
+  - input binding
+  - output emit (button click, form submit, etc.)
+  - error or disabled path when isLoading is true
+
+When generating a dialog:
+- create four files (ts, html, scss, spec)
+- use MatDialog, MAT_DIALOG_DATA, and MatDialogRef
+- add ariaLabel and role="dialog"
+- allow passing in data and returning a result
+- add Jest tests to cover open/close and data in/out
+
+## 6) Service defaults
+
+- create under: projects/swft/swft-ngx-eform-trigger-shared/services/
+- use @Injectable({ providedIn: 'root' })
+- use HttpClient with typed models from models/
+- handle errors with RxJS catchError and return a safe observable
+- add a Jest test using HttpTestingController to cover success and error
+- if the service is intended to be reused, add it to public-api.ts
+
+## 7) Test defaults
+
+- use Jest
+- for components: TestBed + ComponentFixture
+- mock MatDialog, MatSnackBar, and HttpClient when present
+- cover happy path, input/output, and at least one error or disabled case
+- name the spec file the same as the component/service with .spec.ts extension
+- keep tests colocated with the component/service unless the project prefers tests/ (both are acceptable in this POC)
+
+## 8) Default behavior (plain language)
+
+For any user request in this repository, even if written in plain English and without Angular-specific words, apply the rules above and generate full, production-style code.
+
+- If the user asks for a component, create a standalone Angular 19 component with HTML, SCSS, and Jest test, placed in the correct components/ folder.
+- If the user asks for something that clearly needs a dialog (for example “on click open a popup / dialog / confirmation”), generate both the trigger component and the dialog component, each with their own 4 files, and wire them together.
+- If the user asks to “take input”, “add two textboxes”, or “show a form”, create a reactive form, add validation, show errors, and disable submit when invalid or loading.
+- If the user asks to “call API”, create or use a service, add proper error handling, and update the component to show loading and error state.
+- If the user does not specify a folder, put it in components/.
+- If multiple artifacts are implied (for example, a button that opens a dialog and returns a value), generate all of them in one response.
+- Always prefer SCSS, OnPush, Jest, SubSink, and Material.
+- Always keep naming and structure consistent with the SWFT library.
+
+Default: always assume the user wants complete, production-ready SWFT-style Angular output, even if not explicitly stated.

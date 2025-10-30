@@ -1,0 +1,225 @@
+# copilot-instructions.md
+
+## 1) Project overview
+
+SWFT (Simplified Workflow Tool) is an intake and fulfillment platform that lets us build low-code e-forms and automate business workflows.
+
+High level process:
+Request → Intake → Routing → Fulfillment → Resolution/Notification
+
+What UI components usually do:
+- show or edit e-form data
+- open dialogs for preview / recall / send-invite / submission details / warning
+- show loading and error states
+- call shared Angular services for data and actions
+- follow Material/Kendo styling
+
+This instruction file applies to the Angular library:
+projects/swft/swft-ngx-eform-trigger-shared/
+
+## 2) Tech stack (for code generation)
+
+- Angular 19 (standalone components)
+- @angular/core, @angular/common, @angular/forms, @angular/material
+- MatDialog for modals
+- MatSnackBar for non-blocking error/success
+- RxJS for async
+- SubSink for subscription cleanup
+- SCSS for styling
+- Jest for unit tests
+
+Optional but allowed:
+- Kendo UI controls
+- ngx-mask
+- Moment.js / date utils
+
+## 3) Coding guidelines
+
+- Always create: .ts, .html, .scss, .spec.ts
+- Use standalone component syntax
+- Use ChangeDetectionStrategy.OnPush
+- At least one @Input() and one @Output() (unless the component is purely presentational)
+- Use SCSS; no inline styles
+- Add an `isLoading` flag for async work
+- Errors: use MatSnackBar or shared alert component; do not console.log in production code
+- Use SubSink for subscriptions and clean up in ngOnDestroy
+- Dialogs must use MatDialog + MAT_DIALOG_DATA + MatDialogRef and have ariaLabel + role="dialog"
+- Export shared artifacts from public-api.ts
+
+## 4) Project structure (POC)
+
+projects/
+  swft/
+    swft-ngx-eform-trigger-shared/
+      components/              ← feature and shared components
+        shared/                ← components reused across screens
+      services/                ← Angular services (http/orchestration)
+      models/                  ← typed interfaces / DTOs
+      constants/               ← UI labels, enums, messages
+      directives/              ← ui helpers (if any)
+      enums/                   ← central enums (if any)
+      utils/                   ← small helpers (existing, do not move)
+      public-api.ts            ← export reusable parts
+
+Rules for placement:
+- if it’s used in more than one place → components/shared/
+- if it’s feature-specific → components/<feature>/
+- services go to services/<feature>/ when possible
+- every shared component/service must be exported in public-api.ts
+
+## 5) POC note
+
+When a prompt or chat request is unclear, prefer:
+- standalone component
+- OnPush
+- SCSS
+- Jest tests
+- SubSink usage
+- export from public-api.ts
+
+# prompts/component.prompt.md
+
+# Purpose
+Generate a production-ready Angular 19 standalone component that follows the SWFT shared-library patterns.
+
+# Requirements
+- Location: projects/swft/swft-ngx-eform-trigger-shared/components/<feature>/<component-name>/
+- standalone: true
+- changeDetection: ChangeDetectionStrategy.OnPush
+- Inputs/Outputs: at least one @Input() and one @Output() (typed)
+- State: add `isLoading` flag and disable actions when true
+- Accessibility: semantic HTML; ariaLabel where needed
+- Errors: use MatSnackBar (or TODO comment if not imported yet)
+- Styling: SCSS file; no inline styles
+- Tests: create Jest spec covering:
+  - component creation
+  - input binding
+  - output emit
+  - error path (if there is async/dialog logic)
+- If the component is meant to be reused → add note to export in public-api.ts
+
+# Output files
+- <name>.component.ts
+- <name>.component.html
+- <name>.component.scss
+- <name>.component.spec.ts
+
+# Example
+Create a button component that opens a dialog on click. The component should:
+- render a primary button
+- on click, call an injected dialog service (MatDialog)
+- pass data to the dialog
+- show error via MatSnackBar if dialog fails
+- expose an @Output() for “dialogClosed”
+
+# prompts/dialog.prompt.md
+
+# Purpose
+Create a production-ready Angular Material dialog component consistent with SWFT standards.
+
+# Requirements
+- Use MatDialog + MAT_DIALOG_DATA + MatDialogRef
+- Add accessibility: ariaLabel, role="dialog", and autoFocus/focusTrap where valid
+- Move dialog strings to constants (or local readonly variables) instead of hardcoding in logic
+- Add loading state + error display (snack-bar or message)
+- SCSS only, no inline styles
+- Jest spec must test:
+  - dialog opens with data
+  - dialog closes with result
+  - error path (e.g. when confirm fails)
+
+# Output files
+- <name>.dialog.ts (standalone + OnPush)
+- <name>.dialog.html
+- <name>.dialog.scss
+- <name>.dialog.spec.ts
+
+
+# prompts/service.prompt.md
+
+# Purpose
+Create a production-ready Angular service for the SWFT shared library.
+
+# Requirements
+- @Injectable({ providedIn: 'root' })
+- Use HttpClient with typed DTOs from models/ when calling APIs
+- Handle errors with catchError(); return safe observable where possible
+- Allow a place to plug in snack-bar or shared error service (no console.log)
+- Use environments/config if endpoint is variable
+- Tests: Jest with HttpTestingController covering success and error
+
+# Output
+- services/<feature>/<name>.service.ts
+- services/<feature>/<name>.service.spec.ts
+
+# prompts/feature-scaffold.prompt.md
+
+# Purpose
+Scaffold a production-ready feature slice (component + service + models + tests) for the SWFT shared library.
+
+# What to generate
+1) Component (standalone + OnPush) with HTML/SCSS/spec under:
+   projects/swft/swft-ngx-eform-trigger-shared/components/<feature>/<component-name>/
+   - include 1–2 @Input()s and 1 @Output()
+   - show validation messages
+   - add isLoading + error display
+
+2) Service with spec under:
+   projects/swft/swft-ngx-eform-trigger-shared/services/<feature>/<service-name>.service.ts
+
+3) Models (typed interfaces) under:
+   projects/swft/swft-ngx-eform-trigger-shared/models/
+
+4) Add/ensure export in public-api.ts for shared parts
+
+# Rules
+- strict typing; no any
+- SCSS only
+- tests for both component and service (happy + error)
+- use constants for UI strings
+
+
+# prompts/test-generator.prompt.md
+
+# Purpose
+Generate production-grade Jest tests for an existing SWFT Angular component or service.
+
+# Requirements
+- Use TestBed; for services that call HttpClient use HttpTestingController
+- Cover:
+  - happy path
+  - error path
+  - key inputs/outputs/events
+- Mock: MatDialog, MatSnackBar, HttpClient as needed
+- Prefer meaningful assertions (what changed, what was emitted)
+
+# Output
+- <target>.spec.ts   (overwrite or append)
+
+
+
+# prompts/code-review.prompt.md
+
+# Purpose
+Review Angular code for the SWFT shared library and tell me if it is production-ready.
+
+# Checklist
+- standalone component + OnPush
+- file is in the correct folder (components/, services/, models/, constants/)
+- exports present in public-api.ts if it is a shared artifact
+- no any; interfaces in models/ when needed
+- isLoading + error display
+- dialogs use MatDialog, MAT_DIALOG_DATA, MatDialogRef and have ariaLabel
+- subscriptions cleaned up (SubSink / takeUntil)
+- Jest tests present with happy + error
+- SCSS only; no inline styles
+
+# Output format
+- Passed
+- Needs attention (with exact lines or blocks to fix)
+- Blocker (cannot merge)
+
+
+
+
+
